@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_nav"
+    app:startDestination="@id/addGroupFragment">
+    <fragment
+        android:id="@+id/addGroupFragment"
+        android:name="com.example.timetracker.fragment.activityManage.AddGroupFragment"
+        android:label="fragment_add_group"
+        tools:layout="@layout/fragment_add_group" >
+        <action
+            android:id="@+id/action_addGroupFragment_to_addActivityFragment"
+            app:destination="@id/addActivityFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/addActivityFragment"
+        android:name="com.example.timetracker.fragment.activityManage.AddActivityFragment"
+        android:label="fragment_add_activity"
+        tools:layout="@layout/fragment_add_activity" >
+        <action
+            android:id="@+id/action_addActivityFragment_to_addGroupFragment"
+            app:destination="@id/addGroupFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+    </fragment>
+</navigation>

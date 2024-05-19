@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.timetracker.adapter.GroupAdapter">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/group_item_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="20dp"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="18sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:id="@+id/group_item_color_card_view"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    app:cardBackgroundColor="@color/background_black"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="25dp"/>
+
+                <TextView
+                    android:id="@+id/group_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Group Name"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/group_item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:00"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"/>
+            </LinearLayout>
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/activityFlexboxLayout"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <TextView
+                android:id="@+id/no_activity_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:text="该分类下还没有添加活动\n快来添加吧!"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

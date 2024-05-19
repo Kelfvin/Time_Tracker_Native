@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/groupItemLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/group_item_color_card_view"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:cardBackgroundColor="@color/background_black"
+        app:cardCornerRadius="25dp"/>
+    <TextView
+        android:id="@+id/group_item_name"
+        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group Name"
+        android:textSize="18sp"/>
+</LinearLayout>
