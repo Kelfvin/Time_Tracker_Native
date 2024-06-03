@@ -32,6 +32,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+
             <androidx.cardview.widget.CardView
                 app:cardElevation="0dp"
                 android:id="@+id/runningRecordCardView"

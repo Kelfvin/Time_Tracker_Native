@@ -2,7 +2,6 @@ package com.example.timetracker.fragment.activityManage;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,13 +11,13 @@ import androidx.lifecycle.ViewModel;
 import com.example.timetracker.data.model.Activity;
 import com.example.timetracker.data.model.Group;
 import com.example.timetracker.data.repository.ActivityRepository;
-import com.example.timetracker.data.repository.GroupRespository;
+import com.example.timetracker.data.repository.GroupRepository;
 import com.example.timetracker.result.Result;
 
 public class AddActivityViewModel extends ViewModel {
 
     private ActivityRepository activityRepository;
-    private GroupRespository groupRespository;
+    private GroupRepository groupRespository;
 
     private final MutableLiveData<Activity> activity;
     private MutableLiveData<Group> groupLiveData;
@@ -31,7 +30,7 @@ public class AddActivityViewModel extends ViewModel {
 
     public void init(Application application) {
         activityRepository = new ActivityRepository(application);
-        groupRespository = new GroupRespository(application);
+        groupRespository = new GroupRepository(application);
     }
 
     private Result validateActivity() {

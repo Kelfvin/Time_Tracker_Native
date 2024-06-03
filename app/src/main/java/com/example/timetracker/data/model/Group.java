@@ -19,6 +19,10 @@ public class Group {
     @ColumnInfo(name = "color")
     private String color;
 
+
+    @Ignore
+    private Long timeCost;
+
     public Group(String name, String description, String color) {
         this.name = name;
         this.description = description;
@@ -59,5 +63,13 @@ public class Group {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public Long getTimeCost() {
+        return timeCost;
+    }
+
+    public void setTimeCost(Long timeCoast) {
+        this.timeCost = timeCoast;
     }
 }

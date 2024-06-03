@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.timetracker.R;
 import com.example.timetracker.activity.activity_execute.ActivityExecuteActivity;
 import com.example.timetracker.activity.activity_manage.ActivityManageActivity;
 import com.example.timetracker.adapter.GroupAdapter;
+import com.example.timetracker.data.model.Activity;
 import com.example.timetracker.data.model.GroupAndActivitiesAndRecords;
 import com.example.timetracker.data.model.RecordWithActivity;
 import com.example.timetracker.databinding.FragmentHomeBinding;
@@ -29,8 +31,9 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
 import java.util.List;
+import java.util.Map;
 
-
+import com.example.timetracker.data.model.Record;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private HomeViewModel homeViewModel;
@@ -46,7 +49,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.init(requireActivity().getApplication());
-
     }
 
     @Override
@@ -64,6 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         addFloatingActionButtonListener();
+
 
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
         // 流式布局
@@ -109,8 +112,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         binding.finishBtn.setOnClickListener(this);
         binding.runningRecordCardView.setOnClickListener(this);
-
-
     }
 
     private void addFloatingActionButtonListener() {

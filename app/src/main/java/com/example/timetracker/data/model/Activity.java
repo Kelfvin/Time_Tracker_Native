@@ -7,10 +7,6 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.sql.Time;
-import java.time.Duration;
-import java.util.List;
-
 @Entity // 表示当前类是一个实体类
         (       tableName = "activity", // 表示当前实体类对应的表名
                 foreignKeys =
@@ -39,6 +35,9 @@ public class Activity {
     @ColumnInfo(name = "color")
     private String color;
 
+
+    @Ignore
+    private Long timeCost;
 
 
     public Integer getId() {
@@ -106,5 +105,13 @@ public class Activity {
                 ", description='" + description + '\'' +
                 ", color='" + color + '\'' +
                 '}';
+    }
+
+    public Long getTimeCost() {
+        return timeCost;
+    }
+
+    public void setTimeCost(Long timeCost) {
+        this.timeCost = timeCost;
     }
 }

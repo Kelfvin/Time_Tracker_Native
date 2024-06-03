@@ -48,6 +48,9 @@ dependencies {
     implementation libs.annotation
 
     implementation libs.mpandroidchart
+    implementation libs.rxjava
+
+    implementation 'com.haibin:calendarview:3.7.1'
 
     implementation libs.jaredrummler.colorpicker
     implementation libs.google.flexbox
@@ -60,6 +63,7 @@ dependencies {
 
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
 
 
 }

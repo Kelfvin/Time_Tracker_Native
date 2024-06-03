@@ -1,6 +1,8 @@
 package com.example.timetracker.data.dao;
 
 
+import com.example.timetracker.data.model.Activity;
+import com.example.timetracker.data.model.GroupAndActivitiesAndRecords;
 import com.example.timetracker.data.model.Record;
 import com.example.timetracker.data.model.RecordWithActivity;
 
@@ -13,6 +15,7 @@ import androidx.room.Update;
 import androidx.room.Query;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Dao
@@ -32,6 +35,13 @@ public interface RecordDao {
 
     @Query("SELECT * FROM record ORDER BY id DESC")
     List<Record> getAllRecords();
+
+    @Query("SELECT * FROM record WHERE start_time >= :startTime AND ( end_time <= :endTime OR end_time IS NULL) ORDER BY start_time DESC")
+    List<Record> getRecords(long startTime, long endTime);
+
+    @Query("SELECT * FROM record WHERE start_time >= :startTime AND ( end_time <= :endTime OR end_time IS NULL) ORDER BY start_time DESC")
+    LiveData<List<Record>> getRecordsLiveData(long startTime, long endTime);
+
 
     @Query("SELECT * FROM record WHERE id = :id")
     LiveData<Record> getRecordLiveDataById(int id);
@@ -53,5 +63,6 @@ public interface RecordDao {
     @Transaction
     @Query("SELECT * FROM record WHERE id = :recordId")
     LiveData<RecordWithActivity> getRecordWithActivityLiveDataByRecordId(int recordId);
+
 
 }

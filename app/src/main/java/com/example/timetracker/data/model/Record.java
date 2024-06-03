@@ -34,6 +34,10 @@ public class Record {
     private String description;
 
 
+    @Ignore
+    private Long timeCoast;
+
+
     @NonNull
     @Override
     public String toString() {
@@ -86,5 +90,13 @@ public class Record {
         this.description = description;
     }
 
+
+    public Long getTimeCoast() {
+        return timeCoast;
+    }
+
+    public void setTimeCoast(Long timeCoast) {
+        this.timeCoast = timeCoast;
+    }
 
 }

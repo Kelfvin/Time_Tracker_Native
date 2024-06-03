@@ -7,11 +7,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.timetracker.data.model.Group;
-import com.example.timetracker.data.repository.GroupRespository;
+import com.example.timetracker.data.repository.GroupRepository;
 import com.example.timetracker.result.Result;
 
 public class AddGroupVieModel extends ViewModel {
-    private GroupRespository groupRespository;
+    private GroupRepository groupRespository;
     private MutableLiveData<Group> groupLiveData;
 
     public AddGroupVieModel() {
@@ -27,7 +27,7 @@ public class AddGroupVieModel extends ViewModel {
     }
 
     public void init(Application application) {
-        groupRespository = new GroupRespository(application);
+        groupRespository = new GroupRepository(application);
         groupLiveData = new MutableLiveData<>(new Group());
     }
 

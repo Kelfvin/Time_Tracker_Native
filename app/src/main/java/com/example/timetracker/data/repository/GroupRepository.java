@@ -3,9 +3,11 @@ package com.example.timetracker.data.repository;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.timetracker.data.ActivityDatabase;
 import com.example.timetracker.data.dao.GroupDao;
+import com.example.timetracker.data.dao.RecordDao;
 import com.example.timetracker.data.model.Group;
 import com.example.timetracker.data.model.GroupAndActivities;
 import com.example.timetracker.data.model.GroupAndActivitiesAndRecords;
@@ -14,24 +16,19 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class GroupRespository {
-    private LiveData<List<Group>> groups;
-
-    private LiveData<List<GroupAndActivities>> groupsAndActivities;
-
-    private List<Group> groupList;
-    private List<GroupAndActivities> groupAndActivitiesList;
-
+public class GroupRepository {
     private final GroupDao groupDao;
+    private final RecordDao recordDao;
     private final ExecutorService executorService;
 
-    public GroupRespository(Application application) {
+    public GroupRepository(Application application) {
         groupDao = ActivityDatabase.getDatabase(application).getGroupDao();
+        recordDao = ActivityDatabase.getDatabase(application).getRecordDao();
         executorService = Executors.newSingleThreadExecutor();
     }
 
     public LiveData<List<Group>> getAllGroupsLiveData() {
-        groups = groupDao.getAllGroupsLiveData();
+        LiveData<List<Group>> groups = groupDao.getAllGroupsLiveData();
         return groups;
     }
 
@@ -58,16 +55,46 @@ public class GroupRespository {
     }
 
     public LiveData<List<GroupAndActivities>> getAllGroupsAndActivitiesLiveData() {
-        groupsAndActivities = groupDao.getAllGroupsAndActivitiesLiveData();
-        return groupsAndActivities;
+        return groupDao.getAllGroupsAndActivitiesLiveData();
     }
 
     public Group getGroupById(int id) {
         return groupDao.getGroupById(id);
     }
 
-
-    public LiveData<List<GroupAndActivitiesAndRecords>> getAllGroupsAndActivitiesAndRecordsLiveData() {
-        return groupDao.getAllGroupAndActivitiesAndRecordsLiveData();
+    public List<GroupAndActivities> getAllGroupsAndActivities() {
+        return groupDao.getAllGroupsAndActivities();
     }
+
+
+
+
+    public LiveData<List<GroupAndActivitiesAndRecords>> getAllGroupsAndActivitiesAndRecordsLiveData(long startTime, long endTime) {
+
+        LiveData<List<GroupAndActivitiesAndRecords>> groupsAndActivitiesAndRecords = groupDao.getAllGroupsAndActivitiesAndRecordsLiveData();
+
+        groupsAndActivitiesAndRecords.observeForever(
+            new Observer<List<GroupAndActivitiesAndRecords>>() {
+                @Override
+                public void onChanged(List<GroupAndActivitiesAndRecords> groupAndActivitiesAndRecords) {
+                    for (GroupAndActivitiesAndRecords item : groupAndActivitiesAndRecords) {
+                        item.filtByTime(startTime, endTime);
+                        item.calculateGroupTimeCost();
+                    }
+                }
+            }
+        );
+
+        return groupsAndActivitiesAndRecords;
+
+    }
+
+    public List<GroupAndActivitiesAndRecords> getAllGroupsAndActivitiesAndRecords() {
+        List<GroupAndActivitiesAndRecords> groupsAndActivitiesAndRecords = groupDao.getAllGroupsAndActivitiesAndRecords();
+        for (GroupAndActivitiesAndRecords item : groupsAndActivitiesAndRecords) {
+            item.calculateGroupTimeCost();
+        }
+        return groupsAndActivitiesAndRecords;
+    }
+
 }

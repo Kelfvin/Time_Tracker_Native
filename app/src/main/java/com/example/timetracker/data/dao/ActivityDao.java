@@ -10,8 +10,10 @@ import androidx.room.Update;
 
 import com.example.timetracker.data.model.Activity;
 import com.example.timetracker.data.model.ActivityAndRecords;
+import com.example.timetracker.data.model.Record;
 
 import java.util.List;
+import java.util.Map;
 
 @Dao // Data Access Object
 public interface ActivityDao {
@@ -39,7 +41,7 @@ public interface ActivityDao {
 
 
     @Transaction
-    @Query("SELECT * FROM activity")
+    @Query("SELECT * FROM `activity`")
     LiveData<List<ActivityAndRecords>> getActivitiesAndRecordsLiveData();
 
     @Transaction
@@ -54,5 +56,7 @@ public interface ActivityDao {
     @Transaction
     @Query("SELECT * FROM activity WHERE id = :id")
     ActivityAndRecords getActivitiesAndRecordsById(int id);
+
+
 
 }

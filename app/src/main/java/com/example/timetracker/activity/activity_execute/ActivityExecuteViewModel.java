@@ -8,14 +8,14 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.timetracker.data.model.RecordWithActivity;
 import com.example.timetracker.data.repository.ActivityRepository;
-import com.example.timetracker.data.repository.GroupRespository;
+import com.example.timetracker.data.repository.GroupRepository;
 import com.example.timetracker.data.repository.RecordRepository;
 
 public class ActivityExecuteViewModel extends ViewModel {
 
 
     private ActivityRepository activityRepository;
-    private GroupRespository groupRespository;
+    private GroupRepository groupRespository;
     private RecordRepository recordRepository;
     private MutableLiveData<Long> executeTime = new MutableLiveData<>();
     private MutableLiveData<RecordWithActivity> runningRecordWithActivityLiveData = new MutableLiveData<>();
@@ -29,7 +29,7 @@ public class ActivityExecuteViewModel extends ViewModel {
 
     public void init(Application application) {
         activityRepository = new ActivityRepository(application);
-        groupRespository = new GroupRespository(application);
+        groupRespository = new GroupRepository(application);
         recordRepository = new RecordRepository(application);
 
         recordRepository.getRunningRecordLiveData().observeForever(recordWithActivity -> {

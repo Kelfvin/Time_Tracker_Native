@@ -22,4 +22,10 @@
         android:name="com.example.timetracker.fragment.StatisticFragment"
         android:label="fragment_stats"
         tools:layout="@layout/fragment_statistic" />
+
+    <fragment
+        android:id="@+id/recordFragment"
+        android:name="com.example.timetracker.fragment.record.RecordFragment"
+        android:label="fragment_record"
+        tools:layout="@layout/fragment_record" />
 </navigation>

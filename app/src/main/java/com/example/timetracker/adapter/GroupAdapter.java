@@ -46,11 +46,11 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         holder.groupName.setText(groupAndActivitiesAndRecords.getGroup().getName());
         holder.groupTime.setText("00:00");
         holder.groupColorCardView.setCardBackgroundColor(Color.parseColor(groupAndActivitiesAndRecords.getGroup().getColor()));
-
         // 动态绑定flexbox布局，动态设置活动按钮
-        holder.flexboxLayout.removeAllViews();
+        List<ActivityAndRecords> activityAndRecordsList = groupAndActivitiesAndRecords.getActivitiesAndRecords();
 
-        if (groupAndActivitiesAndRecords.getActivitiesAndRecords().size() == 0) {
+        holder.flexboxLayout.removeAllViews();
+        if (activityAndRecordsList.isEmpty()) {
             holder.flexboxLayout.setVisibility(View.GONE);
             holder.noActivityText.setVisibility(View.VISIBLE);
         } else {
@@ -60,10 +60,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
         long groupTotalTime = groupAndActivitiesAndRecords.getTotalTimeCost();
         holder.groupTime.setText(FormatRunTime.format(groupTotalTime));
-
-
-        for (int i = 0; i < groupAndActivitiesAndRecords.getActivitiesAndRecords().size(); i++) {
-            ActivityAndRecords activityAndRecords = groupAndActivitiesAndRecords.getActivitiesAndRecords().get(i);
+        for (int i = 0; i < activityAndRecordsList.size(); i++) {
+            ActivityAndRecords activityAndRecords = activityAndRecordsList.get(i);
             Activity activity = activityAndRecords.getActivity();
             View ActivityItem = LayoutInflater.from(holder.flexboxLayout.getContext()).inflate(R.layout.activity_item, holder.flexboxLayout, false);
             long activityTotalTime = activityAndRecords.getTotalTimeCost();

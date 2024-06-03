@@ -10,9 +10,12 @@ import com.example.timetracker.data.dao.ActivityDao;
 import com.example.timetracker.data.model.Activity;
 
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import com.example.timetracker.data.model.ActivityAndRecords;
+import com.example.timetracker.data.model.Record;
 
 public class ActivityRepository {
     private LiveData<List<Activity>> activities;
@@ -56,4 +59,21 @@ public class ActivityRepository {
     public LiveData<Activity> getActivityLiveDataById(int id) {
         return activityDao.getActivityLiveDataById(id);
     }
+
+    public LiveData<List<ActivityAndRecords>> getActivitiesAndRecordsLiveDataByTime(long startTime, long endTime) {
+
+        LiveData<List<ActivityAndRecords>> activitiesAndRecords = activityDao.getActivitiesAndRecordsLiveData();
+        activitiesAndRecords.observeForever(activityAndRecords -> {
+            for (ActivityAndRecords aar : activityAndRecords) {
+                // 过滤时间
+                aar.filtByTime(startTime, endTime);
+            }
+        });
+
+        return activitiesAndRecords;
+    }
+
+
+
+
 }

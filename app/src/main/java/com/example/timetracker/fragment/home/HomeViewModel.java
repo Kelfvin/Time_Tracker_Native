@@ -1,6 +1,8 @@
 package com.example.timetracker.fragment.home;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -8,23 +10,30 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.timetracker.data.model.Activity;
-import com.example.timetracker.data.model.Group;
-import com.example.timetracker.data.model.GroupAndActivities;
 import com.example.timetracker.data.model.GroupAndActivitiesAndRecords;
+import com.example.timetracker.data.model.Record;
 import com.example.timetracker.data.model.RecordWithActivity;
 import com.example.timetracker.data.repository.ActivityRepository;
-import com.example.timetracker.data.repository.GroupRespository;
+import com.example.timetracker.data.repository.GroupRepository;
 import com.example.timetracker.data.repository.RecordRepository;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class HomeViewModel extends ViewModel {
 
     private ActivityRepository activityRepository;
-    private GroupRespository groupRespository;
+    private GroupRepository groupRepository;
     private RecordRepository recordRepository;
     private MutableLiveData<Long> executeTime = new MutableLiveData<>();
+
+    private final MutableLiveData<List<GroupAndActivitiesAndRecords>> allGroupsAndActivitiesAndRecordsLiveData = new MutableLiveData<>();
+
     private MutableLiveData<RecordWithActivity> runningRecordWithActivityLiveData = new MutableLiveData<>();
 
     // 运行的线程
@@ -49,12 +58,11 @@ public class HomeViewModel extends ViewModel {
     public void init(@NonNull Application application) {
         // 添加数据库，第一个参数是上下文，第二个参数是数据库类，第三个参数是数据库名
         activityRepository = new ActivityRepository(application);
-        groupRespository = new GroupRespository(application);
+        groupRepository = new GroupRepository(application);
         recordRepository = new RecordRepository(application);
 
         recordRepository.getRunningRecordLiveData().observeForever(recordWithActivity -> {
             runningRecordWithActivityLiveData.setValue(recordWithActivity);
-
             // 如果线程为空，就开启线程
             if (timerThread == null) {
                 timerThread = new Thread(() -> {
@@ -97,31 +105,58 @@ public class HomeViewModel extends ViewModel {
             }
 
         });
-    }
-
-    public LiveData<List<Group>> getGroups() {
-        return groupRespository.getAllGroupsLiveData();
-    }
 
 
-    public LiveData<List<Activity>> getActivities() {
-        return activityRepository.getAllActivitiesLiveData();
+
+        // 获取所有的组和活动和记录
+        // 获取当天的所有记录
+        // 开始时间 当天的0点
+        // 结束时间 当天的24点
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, 0);
+        startTime.set(Calendar.MINUTE, 0);
+        startTime.set(Calendar.SECOND, 0);
+        long startTimeLong = startTime.getTimeInMillis();
+
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(Calendar.HOUR_OF_DAY, 23);
+        endTime.set(Calendar.MINUTE, 59);
+        endTime.set(Calendar.SECOND, 59);
+        long endTimeLong = endTime.getTimeInMillis();
+        groupRepository.getAllGroupsAndActivitiesAndRecordsLiveData(startTimeLong,endTimeLong)
+                .observeForever(allGroupsAndActivitiesAndRecordsLiveData::postValue);
+
     }
 
-    public void insertActivities(Activity... activity) {
-        activityRepository.insertActivities(activity);
+    public void fetchAllGroupsAndActivitiesAndRecords() {
+        Observable.fromCallable(() -> groupRepository.getAllGroupsAndActivitiesAndRecords())
+                .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
+                .subscribe(new Observer<List<GroupAndActivitiesAndRecords>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull List<GroupAndActivitiesAndRecords> groupAndActivitiesAndRecords) {
+                        allGroupsAndActivitiesAndRecordsLiveData.postValue(groupAndActivitiesAndRecords);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        Log.e("HomeViewModel", "fetchAllGroupsAndActivitiesAndRecords: ", e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
-    public void insertGroups(Group... group) {
-        groupRespository.insertGroups(group);
-    }
-
-    public LiveData<List<GroupAndActivities>> getGroupsAndActivities() {
-        return groupRespository.getAllGroupsAndActivitiesLiveData();
-    }
 
     public LiveData<List<GroupAndActivitiesAndRecords>> getAllGroupsAndActivitiesAndRecordsLiveData() {
-        return groupRespository.getAllGroupsAndActivitiesAndRecordsLiveData();
+        return allGroupsAndActivitiesAndRecordsLiveData;
     }
 
 

@@ -2,65 +2,87 @@ package com.example.timetracker.fragment.record;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.timetracker.R;
+import com.example.timetracker.databinding.FragmentRecordBinding;
+import com.example.timetracker.fragment.record.timeblock.TimeBlockFragment;
+import com.haibin.calendarview.Calendar;
+import com.haibin.calendarview.CalendarView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecrodFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class RecrodFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class RecordFragment extends Fragment {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentRecordBinding binding;
+    private RecordFragementViewModel recordFragementViewModel;
+    private TimeBlockFragment timeBlockFragment;
 
-    public RecrodFragment() {
+
+    public RecordFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecrodFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecrodFragment newInstance(String param1, String param2) {
-        RecrodFragment fragment = new RecrodFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static RecordFragment newInstance() {
+        return new RecordFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        recordFragementViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()).create(RecordFragementViewModel.class);
+        timeBlockFragment = new TimeBlockFragment();
     }
 
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recrod, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_record, container, false);
+        binding.setLifecycleOwner(this);
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.recordFragmentContainer, timeBlockFragment);
+        fragmentTransaction.commit();
+        return binding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.calendarView.setOnCalendarSelectListener(new CalendarView.OnCalendarSelectListener() {
+
+            @Override
+            public void onCalendarOutOfRange(Calendar calendar) {
+                Log.d("CalendarView", "onCalendarOutOfRange: " + calendar.toString());
+            }
+
+            @Override
+            public void onCalendarSelect(Calendar calendar, boolean isClick) {
+                Log.d("CalendarView", "onCalendarSelect: " + calendar.toString() + " isClick: " + isClick);
+                // 转换为Calendar格式
+                java.util.Calendar calendar1 = java.util.Calendar.getInstance();
+                calendar1.set(calendar.getYear(), calendar.getMonth() - 1, calendar.getDay());
+                recordFragementViewModel.setSelectedDate(calendar1);
+                Log.d("CalendarView", "onCalendarSelect: " + recordFragementViewModel.getSelectedDate().toString());
+
+                timeBlockFragment.setSelectDate(calendar1);
+            }
+        });
     }
 }

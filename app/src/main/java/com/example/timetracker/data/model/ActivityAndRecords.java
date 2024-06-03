@@ -4,6 +4,7 @@ import androidx.room.Embedded;
 import androidx.room.Relation;
 
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 public class ActivityAndRecords {
@@ -15,7 +16,6 @@ public class ActivityAndRecords {
             entityColumn = "activity_id"
     )
     private List<Record> records;
-
 
     public Activity getActivity() {
         return activity;
@@ -34,19 +34,38 @@ public class ActivityAndRecords {
     }
 
     public Long getTotalTimeCost() {
+        return activity.getTimeCost();
+    }
+
+    public void calculateActivityTimeCost(){
         long totalTimeCost = 0;
         for (Record record : records) {
             Calendar startTime = record.getStartTime();
             Calendar endTime = record.getEndTime();
-            if (startTime == null) {
-                return 0L;
-            }
 
             if (endTime == null) {
                 endTime = Calendar.getInstance();
             }
             totalTimeCost += endTime.getTimeInMillis() - startTime.getTimeInMillis();
         }
-        return totalTimeCost;
+        activity.setTimeCost(totalTimeCost);
+    }
+
+
+    public void filtByTime(long startTime, long endTime) {
+
+        Iterator<Record> iterator = records.iterator();
+        while (iterator.hasNext()) {
+            Record record = iterator.next();
+            Calendar recordStartTime = record.getStartTime();
+            Calendar recordEndTime = record.getEndTime();
+            if (recordEndTime == null) {
+                recordEndTime = Calendar.getInstance();
+            }
+            if (recordStartTime.getTimeInMillis() < startTime || recordEndTime.getTimeInMillis() > endTime) {
+                iterator.remove();
+            }
+        }
+
     }
 }

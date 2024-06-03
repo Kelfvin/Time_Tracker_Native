@@ -3,7 +3,6 @@ package com.example.timetracker.data.model;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class GroupAndActivitiesAndRecords {
@@ -35,11 +34,23 @@ public class GroupAndActivitiesAndRecords {
     }
 
     public Long getTotalTimeCost() {
-        long totalTimeCost = 0;
-        for (ActivityAndRecords activityAndRecords : activitiesAndRecords) {
-            totalTimeCost+=activityAndRecords.getTotalTimeCost();
-        }
-        return totalTimeCost;
+        return group.getTimeCost();
     }
 
+    // 遍历所有的ActivityAndRecords，计算每个Group的总时间
+    public void calculateGroupTimeCost(){
+        long totalTimeCost = 0;
+        for (ActivityAndRecords activityAndRecords : activitiesAndRecords) {
+            activityAndRecords.calculateActivityTimeCost();
+            Activity activity = activityAndRecords.getActivity();
+            totalTimeCost+=activityAndRecords.getActivity().getTimeCost();
+        }
+        group.setTimeCost(totalTimeCost);
+    }
+
+    public void filtByTime(long startTime, long endTime){
+        for (ActivityAndRecords activityAndRecords : activitiesAndRecords) {
+            activityAndRecords.filtByTime(startTime, endTime);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 [versions]
 agp = "8.4.0"
+calendarview = "3.6.8"
 colorpicker = "2.3"
 colorpickerVersion = "1.1.0"
 colorpickerview = "2.3.0"
@@ -23,8 +24,10 @@ annotation = "1.6.0"
 recyclerviewV7 = "27.1.1"
 roomRuntime = "2.6.1"
 preference = "1.2.1"
+rxjava = "3.1.8"
 
 [libraries]
+calendarview = { module = "com.haibin:calendarview", version.ref = "calendarview" }
 colorpicker = { module = "com.github.Dhaval2404:ColorPicker", version.ref = "colorpicker" }
 colorpickerview = { module = "com.github.skydoves:colorpickerview", version.ref = "colorpickerview" }
 colorsheet = { module = "dev.sasikanth:colorsheet", version.ref = "colorsheet" }
@@ -49,6 +52,7 @@ recyclerview-v7 = { module = "com.android.support:recyclerview-v7", version.ref 
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
+rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

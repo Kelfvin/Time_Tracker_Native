@@ -47,7 +47,7 @@ public interface GroupDao {
 
     @Transaction
     @Query("SELECT * FROM 'group'")
-    List<GroupAndActivities> getGroupsAndActivities();
+    List<GroupAndActivities> getAllGroupsAndActivities();
 
     @Transaction
     @Query("SELECT * FROM 'group' WHERE id = :id")
@@ -61,4 +61,13 @@ public interface GroupDao {
     @Query("SELECT * FROM 'group'")
     LiveData<List<GroupAndActivitiesAndRecords>> getAllGroupAndActivitiesAndRecordsLiveData();
 
+
+    @Transaction
+    @Query("SELECT * FROM `group`")
+    LiveData<List<GroupAndActivitiesAndRecords>> getAllGroupsAndActivitiesAndRecordsLiveData();
+
+
+    @Transaction
+    @Query("SELECT * FROM `group`")
+    List<GroupAndActivitiesAndRecords> getAllGroupsAndActivitiesAndRecords();
 }
