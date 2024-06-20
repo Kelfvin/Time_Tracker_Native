@@ -9,6 +9,7 @@ import com.example.timetracker.data.ActivityDatabase;
 import com.example.timetracker.data.dao.ActivityDao;
 import com.example.timetracker.data.model.Activity;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -62,15 +63,31 @@ public class ActivityRepository {
 
     public LiveData<List<ActivityAndRecords>> getActivitiesAndRecordsLiveDataByTime(long startTime, long endTime) {
 
-        LiveData<List<ActivityAndRecords>> activitiesAndRecords = activityDao.getActivitiesAndRecordsLiveData();
-        activitiesAndRecords.observeForever(activityAndRecords -> {
-            for (ActivityAndRecords aar : activityAndRecords) {
+        LiveData<List<ActivityAndRecords>> activitiesAndRecordsLiveData = activityDao.getActivitiesAndRecordsLiveData();
+
+        activitiesAndRecordsLiveData.observeForever(activitiesAndRecords -> {
+//            for (ActivityAndRecords aar : activitiesAndRecords) {
+//                // 过滤时间
+//                aar.filtByTime(startTime, endTime);
+//                aar.calculateActivityTimeCost();
+//            }
+
+            // 使用迭代器访问
+            Iterator<ActivityAndRecords> iterator = activitiesAndRecords.iterator();
+            while (iterator.hasNext()) {
+                ActivityAndRecords aar = iterator.next();
                 // 过滤时间
                 aar.filtByTime(startTime, endTime);
+                aar.calculateActivityTimeCost();
+                // 如果时间为0，删除
+                if (aar.getTotalTimeCost() == 0) {
+                    iterator.remove();
+                }
             }
+
         });
 
-        return activitiesAndRecords;
+        return activitiesAndRecordsLiveData;
     }
 
 

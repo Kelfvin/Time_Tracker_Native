@@ -156,7 +156,7 @@ public class TimeBlockViewModel extends ViewModel implements TimeGridView.OnTime
         record.setActivityId(activity.getId());
         record.setStartTime(startTime);
         record.setEndTime(endTime);
-        recordRepository.insertRecords(record);
+        recordRepository.insertRecord(record);
 
         // 清空时间
         startTime = null;

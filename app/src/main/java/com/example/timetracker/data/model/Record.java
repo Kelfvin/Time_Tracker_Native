@@ -19,7 +19,7 @@ import java.util.Calendar;
                 onDelete = ForeignKey.CASCADE
         )
 )
-public class Record {
+public class Record implements Cloneable {
     @PrimaryKey
     private Integer id;
     @ColumnInfo(name = "activity_id")
@@ -37,6 +37,12 @@ public class Record {
     @Ignore
     private Long timeCoast;
 
+
+    @NonNull
+    @Override
+    public Record clone() throws CloneNotSupportedException {
+        return (Record) super.clone();
+    }
 
     @NonNull
     @Override
@@ -99,4 +105,10 @@ public class Record {
         this.timeCoast = timeCoast;
     }
 
+    public int getDuration() {
+        if (startTime == null || endTime == null) {
+            return 0;
+        }
+        return (int) (endTime.getTimeInMillis() - startTime.getTimeInMillis());
+    }
 }

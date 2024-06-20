@@ -17,6 +17,7 @@
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:minHeight">30dp</item> <!-- 取消最小高度限制 -->
+        <item name="android:minWidth">0dp</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>
 
