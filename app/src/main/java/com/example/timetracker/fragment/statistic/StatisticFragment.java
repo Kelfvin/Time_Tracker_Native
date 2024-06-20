@@ -1,6 +1,4 @@
-package com.example.timetracker.fragment;
-
-import androidx.lifecycle.ViewModelProvider;
+package com.example.timetracker.activity.statistic;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,10 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.timetracker.R;
-import com.example.timetracker.activity.statistic.StatisticViewModel;
 import com.example.timetracker.databinding.FragmentStatisticBinding;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
