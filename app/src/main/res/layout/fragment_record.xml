@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragment.record.RecordFragment">
 
     <data>
@@ -16,24 +16,49 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/recordFragmentHeader"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="40dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/recordFragmentTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Record"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="16dp" />
-            </LinearLayout>
+                    android:layout_marginStart="16dp"
+                    android:text="记录"
+                    android:textSize="32sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/mode_change_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <ImageButton
+                        android:id="@+id/mode_change_button"
+                        android:layout_margin="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/grid_on_24dp_fill0_wght400_grad0_opsz20">
+                    </ImageButton>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <com.haibin.calendarview.CalendarLayout
@@ -53,12 +78,12 @@
 
             <FrameLayout
                 android:id="@+id/recordFragmentContainer"
-                app:layout_constraintTop_toBottomOf="@id/calendarLayout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calendarLayout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

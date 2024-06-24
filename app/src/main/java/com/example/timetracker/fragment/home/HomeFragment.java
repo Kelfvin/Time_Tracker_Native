@@ -80,6 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // 设置RecyclerView
         groupAdapter = new GroupAdapter();
         binding.groupRecyclerView.setAdapter(groupAdapter);
+        registerForContextMenu(binding.groupRecyclerView);
 
         // 获取数据
         homeViewModel.getAllGroupsAndActivitiesAndRecordsLiveData().observe(getViewLifecycleOwner(), new Observer<List<GroupAndActivitiesAndRecords>>() {

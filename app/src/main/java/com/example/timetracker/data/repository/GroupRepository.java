@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer;
 import com.example.timetracker.data.ActivityDatabase;
 import com.example.timetracker.data.dao.GroupDao;
 import com.example.timetracker.data.dao.RecordDao;
+import com.example.timetracker.data.model.Activity;
 import com.example.timetracker.data.model.Group;
 import com.example.timetracker.data.model.GroupAndActivities;
 import com.example.timetracker.data.model.GroupAndActivitiesAndRecords;
@@ -97,4 +98,9 @@ public class GroupRepository {
         return groupsAndActivitiesAndRecords;
     }
 
+    public void deleteGroupAsync(Group group) {
+        executorService.execute(() -> {
+            groupDao.deleteGroups(group);
+        });
+    }
 }

@@ -10,6 +10,9 @@ import java.util.Calendar;
 public class RecordFragementViewModel extends ViewModel {
 
     private MutableLiveData<Calendar> selectedDate;
+    public static final int GRID_VIEW_MODE = 1;
+    public static final int LIST_VIEW_MODE = 2;
+    private int viewMode = GRID_VIEW_MODE ;
 
     public RecordFragementViewModel() {
         super();
@@ -23,5 +26,13 @@ public class RecordFragementViewModel extends ViewModel {
 
     public LiveData<Calendar> getSelectedDate() {
         return selectedDate;
+    }
+
+    public int getViewMode() {
+        return viewMode;
+    }
+
+    public void setViewMode(int gridViewMode) {
+        this.viewMode = gridViewMode;
     }
 }

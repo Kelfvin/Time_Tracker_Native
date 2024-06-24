@@ -1,5 +1,6 @@
 package com.example.timetracker.fragment.record;
 
+import android.app.Application;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.timetracker.R;
 import com.example.timetracker.databinding.FragmentRecordBinding;
@@ -52,18 +57,56 @@ public class RecordFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_record, container, false);
         binding.setLifecycleOwner(this);
 
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.replace(R.id.recordFragmentContainer, timeBlockFragment);
-        fragmentTransaction.commit();
+        updateFragment();
         return binding.getRoot();
     }
 
+    private void showOptionsMenu(View anchor) {
+        Application application = requireActivity().getApplication();
+        PopupMenu popupMenu = new PopupMenu(application, anchor);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.record_view_mode_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        popupMenu.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        binding.modeChangeButton.setImageDrawable(item.getIcon());
+        if (item.getItemId() == R.id.grid_mode) {
+            // 切换按钮的图片
+            recordFragementViewModel.setViewMode(RecordFragementViewModel.GRID_VIEW_MODE);
+        }
+        if (item.getItemId() == R.id.list_mode) {
+            recordFragementViewModel.setViewMode(RecordFragementViewModel.LIST_VIEW_MODE);
+        }
+
+
+        updateFragment();
+        return super.onOptionsItemSelected(item);
+    }
+
+    // 根据mode 来替换 frame
+    private void updateFragment() {
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (recordFragementViewModel.getViewMode() == RecordFragementViewModel.GRID_VIEW_MODE) {
+            fragmentTransaction.replace(R.id.recordFragmentContainer, timeBlockFragment);
+        } else {
+            // 列表模式
+            // 先用一个文本表示
+            fragmentTransaction.replace(R.id.recordFragmentContainer, new Fragment());
+        }
+        fragmentTransaction.commit();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // view-mode选项
+        binding.modeChangeButton.setOnClickListener(this::showOptionsMenu);
 
         binding.calendarView.setOnCalendarSelectListener(new CalendarView.OnCalendarSelectListener() {
 

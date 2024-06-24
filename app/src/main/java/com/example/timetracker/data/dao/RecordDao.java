@@ -70,4 +70,7 @@ public interface RecordDao {
             "OR (end_time >= :startTime AND end_time <= :endTime)" +
             "OR (start_time <= :startTime AND end_time >= :endTime) ")
     List<Record> selectRecordByConflictTimeRange(long startTime, long endTime);
+
+
+
 }

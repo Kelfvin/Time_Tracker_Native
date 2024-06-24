@@ -6,17 +6,41 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/accountInfoLayout"
+        <TextView
+            android:id="@+id/accountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Time is \nAll You Need!"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:id="@+id/accountInfoLayout"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/accountTitle">
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/accountTitle"
+            >
 
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
@@ -36,6 +60,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
                 android:layout_weight="1">
 
                 <TextView
@@ -43,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Account Name"
+                    android:text="Kelf"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -53,12 +78,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/accountName"
                     android:layout_marginTop="8dp"
-                    android:text="xxxxx@163.com"
+                    android:text="kelfvin@163.com"
                     android:textSize="16sp" />
             </RelativeLayout>
 
 
         </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
 
         <LinearLayout
@@ -71,8 +98,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="8dp">
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,7 +116,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/statistic_icon" />
+                            android:src="@drawable/category_24dp_fill0_wght400_grad0_opsz24" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -103,7 +132,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/statistic_icon" />
+                            android:src="@drawable/database_24dp_fill0_wght400_grad0_opsz24" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -120,7 +149,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/statistic_icon" />
+                            android:src="@drawable/contrast_24dp_fill0_wght400_grad0_opsz24" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -134,7 +163,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="10dp"
+                app:cardElevation="0dp"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
@@ -149,13 +179,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
-                            android:src="@drawable/statistic_icon" />
+                            android:src="@drawable/settings_24dp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/item1"
                             android:layout_centerVertical="true"
-                            android:text="小部件" />
+                            android:text="设置" />
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -165,7 +195,128 @@
                     </RelativeLayout>
                 </LinearLayout>
 
+
+
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/item2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:src="@drawable/local_library_24dp_fill0_wght400_grad0_opsz24" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/item2"
+                            android:layout_centerVertical="true"
+                            android:text="帮助" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_forward"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/item3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:src="@drawable/cloud_upload_24dp_fill0_wght400_grad0_opsz24" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/item3"
+                            android:layout_centerVertical="true"
+                            android:text="备份/还原" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_forward"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/info_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:src="@drawable/info_24dp_fill0_wght400_grad0_opsz24" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/info_icon"
+                            android:layout_centerVertical="true"
+                            android:text="设置" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_forward"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

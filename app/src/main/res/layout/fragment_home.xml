@@ -32,18 +32,30 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:text="Time Tracker"
+                android:textColor="?android:textColorPrimary"
+                android:textFontWeight="700"
+                android:textSize="32sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <androidx.cardview.widget.CardView
-                app:cardElevation="0dp"
                 android:id="@+id/runningRecordCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
                 android:layout_marginEnd="16dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
                 card_view:cardCornerRadius="12dp">
 
 
@@ -56,13 +68,12 @@
                         android:id="@+id/activityColor"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:cardCornerRadius="25dp"
                         android:layout_margin="18dp"
                         app:cardBackgroundColor="@{data.runningRecordWithActivityLiveData.activity.color,default=@color/pink}"
-                        />
+                        app:cardCornerRadius="25dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -72,9 +83,8 @@
                         android:layout_marginStart="20dp"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@id/activityColor"
-                        >
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
                             android:id="@+id/activityName"
@@ -106,16 +116,6 @@
             </androidx.cardview.widget.CardView>
 
 
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/materialDivider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/runningRecordCardView" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -129,7 +129,7 @@
 
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialDivider" />
+                app:layout_constraintTop_toBottomOf="@+id/runningRecordCardView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/groupRecyclerView"

@@ -91,6 +91,9 @@ public class ActivityRepository {
     }
 
 
-
-
+    public void deleteActivityAsync(Activity activity) {
+        executorService.execute(() -> {
+            activityDao.deleteActivities(activity);
+        });
+    }
 }
