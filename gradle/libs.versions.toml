@@ -5,6 +5,7 @@ colorpicker = "2.3"
 colorpickerVersion = "1.1.0"
 colorpickerview = "2.3.0"
 colorsheet = "1.0.1"
+coreKtx = "1.13.1"
 flexbox = "1.0.0"
 flexboxVersion = "3.0.0"
 junit = "4.13.2"
@@ -31,6 +32,8 @@ calendarview = { module = "com.haibin:calendarview", version.ref = "calendarview
 colorpicker = { module = "com.github.Dhaval2404:ColorPicker", version.ref = "colorpicker" }
 colorpickerview = { module = "com.github.skydoves:colorpickerview", version.ref = "colorpickerview" }
 colorsheet = { module = "dev.sasikanth:colorsheet", version.ref = "colorsheet" }
+core = { module = "androidx.core:core", version.ref = "coreKtx" }
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 flexbox = { module = "com.google.android:flexbox", version.ref = "flexbox" }
 google-flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexboxVersion" }
 jaredrummler-colorpicker = { module = "com.jaredrummler:colorpicker", version.ref = "colorpickerVersion" }

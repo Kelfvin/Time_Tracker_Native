@@ -1,8 +1,12 @@
 package com.example.timetracker.adapter;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timetracker.R;
@@ -30,8 +38,11 @@ import java.util.List;
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
 
     private List<GroupAndActivitiesAndRecords> groupAndActivitiesRecordsList = new ArrayList<>();
+    private Context context;
 
-
+    public GroupAdapter(Context context) {
+        this.context = context;
+    }
 
 
     @NonNull
@@ -81,6 +92,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                     RecordRepository recordRepository = new RecordRepository(application);
                     recordRepository.startRecordAsync(activity);
                     Toast.makeText(holder.flexboxLayout.getContext(), "开始记录" + activity.getName(), Toast.LENGTH_SHORT).show();
+                    // 发送时消息
+                    sendRecordStartMessage(activity);
                 }
             });
 
@@ -95,6 +108,29 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
 
         bindingLongClickGroupEvent(holder.itemView, groupAndActivitiesAndRecords);
+
+    }
+
+    private void sendRecordStartMessage(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "TimeTracker")
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentTitle("开始记录")
+                    .setContentText("开始记录" + activity.getName())
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            notificationManager.notify(1, builder.build());
+        }
 
     }
 
@@ -118,40 +154,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                 return true;
             }
         });
-
-
-//        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                // 长按事件
-//                // 弹出对话框
-//                AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
-//                builder.setTitle("删除群组");
-//                builder.setMessage("确定删除" + groupAndActivitiesAndRecords.getGroup().getName() + "吗？");
-//
-//
-//                builder.setPositiveButton("确定", (dialog, which) -> {
-//                    // 删除群组
-//                    Application application = (Application) itemView.getContext().getApplicationContext();
-//                    GroupRepository groupRepository = new GroupRepository(application);
-//                    groupRepository.deleteGroupAsync(groupAndActivitiesAndRecords.getGroup());
-////                    recordRepository.deleteGroupAsync(groupAndActivitiesAndRecords.getGroup());
-//                    Toast.makeText(itemView.getContext(), "删除" + groupAndActivitiesAndRecords.getGroup().getName(), Toast.LENGTH_SHORT).show();
-//
-//                });
-//
-//                // 取消按钮
-//                builder.setNegativeButton("取消", (dialog, which) -> {
-//                    // do nothing
-//                });
-//
-//                builder.show();
-//                return true;
-//            }
-//        });
-
-
-
     }
 
     // 显示确定删除对话框
@@ -223,31 +225,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
 
 
-//        ActivityItem.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                // 长按事件
-//                // 弹出对话框
-//                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityItem.getContext());
-//                builder.setTitle("删除活动");
-//                builder.setMessage("确定删除" + activity.getName() + "吗？");
-//
-//                builder.setPositiveButton("确定", (dialog, which) -> {
-//                    // 删除活动
-//                    Application application = (Application) ActivityItem.getContext().getApplicationContext();
-//                    ActivityRepository activityRepository = new ActivityRepository(application);
-//                    activityRepository.deleteActivityAsync(activity);
-//                    Toast.makeText(ActivityItem.getContext(), "删除" + activity.getName(), Toast.LENGTH_SHORT).show();
-//                });
-//
-//                // 取消按钮
-//                builder.setNegativeButton("取消", (dialog, which) -> {
-//                    // do nothing
-//                });
-//                builder.show();
-//                return true;
-//            }
-//        });
     }
 
     @Override

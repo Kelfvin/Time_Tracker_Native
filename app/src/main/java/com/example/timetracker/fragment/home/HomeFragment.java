@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         //  先从左到右排列，然后换行
 
         // 设置RecyclerView
-        groupAdapter = new GroupAdapter();
+        groupAdapter = new GroupAdapter(getContext());
         binding.groupRecyclerView.setAdapter(groupAdapter);
         registerForContextMenu(binding.groupRecyclerView);
 
