@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="基本设置">
+        android:title="个性化">
 
 
         <SwitchPreferenceCompat
@@ -18,6 +18,21 @@
             android:entries="@array/language"
             android:entryValues="@array/language_value"
             android:defaultValue="zh"/>
+
+        <EditTextPreference
+            android:key="username"
+            android:title="昵称"
+            android:summary="设置昵称"
+            android:dialogTitle="设置昵称"
+            android:defaultValue="Null"/>
+
+        <EditTextPreference
+            android:key="signature"
+            android:title="个性签名"
+            android:summary="设置个性签名"
+            android:dialogTitle="设置个性签名"
+            android:defaultValue="Time is \nAll you Need"/>
+
     </PreferenceCategory>
 
 
